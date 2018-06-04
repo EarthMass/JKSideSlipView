@@ -17,6 +17,11 @@
     UIViewController *_sender;
     UIView *_contentView;
 }
+@property (nonatomic, assign) BOOL showFromLeft; ///<Defualt left YES
+@property (nonatomic, assign) CGFloat spaceToEdge; ///<边缘的距离 default 30
+@property (nonatomic, assign) BOOL showBur;        ///<边缘半透明是否显示 default YES
+
+
 - (instancetype)initWithSender:(UIViewController*)sender;
 -(void)show;
 -(void)hide;

@@ -13,4 +13,6 @@
     JKSideSlipView *_sideSlipView;
 }
 - (IBAction)switchTouched:(id)sender;
+- (IBAction)rightClick:(id)sender;
+
 @end

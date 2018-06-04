@@ -21,8 +21,10 @@
     
     _sideSlipView = [[JKSideSlipView alloc]initWithSender:self];
     _sideSlipView.backgroundColor = [UIColor redColor];
+//    _sideSlipView.showFromLeft = NO;
     
     MenuView *menu = [MenuView menuView];
+
     [menu didSelectRowAtIndexPath:^(id cell, NSIndexPath *indexPath) {
         NSLog(@"click");
         [_sideSlipView hide];
@@ -51,7 +53,17 @@
 */
 
 - (IBAction)switchTouched:(id)sender {
+    _sideSlipView.showFromLeft = YES;
+    _sideSlipView.spaceToEdge = 100;
+    _sideSlipView.showBur = NO;
     [_sideSlipView switchMenu];
     
+}
+
+- (IBAction)rightClick:(id)sender {
+    _sideSlipView.showFromLeft = NO;
+    _sideSlipView.spaceToEdge = 200;
+    _sideSlipView.showBur = YES;
+     [_sideSlipView switchMenu];
 }
 @end
