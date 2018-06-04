@@ -43,7 +43,7 @@ static CGFloat SLIP_WIDTH = 250;
     _rightSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(show)];
     _rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     
-     [_sender.view addGestureRecognizer:_tap];
+    [_sender.view addGestureRecognizer:_tap];
     [_sender.view addGestureRecognizer:_leftSwipe];
     [_sender.view addGestureRecognizer:_rightSwipe];
     
@@ -51,7 +51,7 @@ static CGFloat SLIP_WIDTH = 250;
     _blurImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     _blurImageView.userInteractionEnabled = NO;
     _blurImageView.alpha = 0;
-//    _blurImageView.backgroundColor = [UIColor grayColor];
+    //    _blurImageView.backgroundColor = [UIColor grayColor];
     //_blurImageView.layer.borderWidth = 5;
     //_blurImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     [self addSubview:_blurImageView];
@@ -72,14 +72,14 @@ static CGFloat SLIP_WIDTH = 250;
     _blurImageView.frame = CGRectMake([self burImgVoriginX], 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     
     [_leftSwipe removeTarget:self action:@selector(hide)];
-     [_leftSwipe removeTarget:self action:@selector(show)];
+    [_leftSwipe removeTarget:self action:@selector(show)];
     [_leftSwipe addTarget:self action:_showFromLeft?@selector(hide):@selector(show)];
     
     [_rightSwipe removeTarget:self action:@selector(hide)];
     [_rightSwipe removeTarget:self action:@selector(show)];
     [_rightSwipe removeTarget:self action:nil];
     [_rightSwipe addTarget:self action:_showFromLeft?@selector(show):@selector(hide)];
- 
+    
 }
 
 -(void)setContentView:(UIView*)contentView{
@@ -89,14 +89,14 @@ static CGFloat SLIP_WIDTH = 250;
     
     _contentView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     [self addSubview:_contentView];
-
+    
 }
 
 - (void)setSpaceToEdge:(CGFloat)spaceToEdge {
-     CGRect bounds = [UIScreen mainScreen].bounds;
+    CGRect bounds = [UIScreen mainScreen].bounds;
     _spaceToEdge = spaceToEdge;
     SLIP_WIDTH = bounds.size.width - _spaceToEdge;
-  
+    
     CGRect frame = CGRectMake(-SLIP_WIDTH, 0, SLIP_WIDTH, bounds.size.height);
     self.frame = frame;
     self.showFromLeft = _showFromLeft;
@@ -109,29 +109,32 @@ static CGFloat SLIP_WIDTH = 250;
 
 -(void)show:(BOOL)show{
     UIImage *image =  [self imageFromView:_sender.view];
-   
+    
     if (!isOpen) {
         _blurImageView.alpha = 1;
-
+        
     }
     if (!show) {
         _blurImageView.alpha = 0;
         _blurImageView.image = nil;
     }
     
-   
+    
     CGFloat x = show?[self showOriginX]:[self hiddenOriginX];
     [UIView animateWithDuration:0.3 animations:^{
         self.frame = CGRectMake(x, 0, self.frame.size.width, self.frame.size.height);
+        _tap.enabled = YES;
         if(!isOpen){
+            _blurImageView.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.7];
             if (_showBur) {
+                
                 _blurImageView.image = image;
                 _blurImageView.image= [self blurryImage:_blurImageView.image withBlurLevel:0.2];
             } else {
                 _blurImageView.image = nil;
-                 _blurImageView.alpha = 0;
+                //                 _blurImageView.alpha = 0;
             }
-           
+            
         }
     } completion:^(BOOL finished) {
         isOpen = show;
@@ -139,8 +142,9 @@ static CGFloat SLIP_WIDTH = 250;
             _blurImageView.alpha = 0;
             _blurImageView.image = nil;
             NSLog(@"hidden");
+            _tap.enabled = NO;
         }
-
+        
     }];
     
 }
@@ -151,7 +155,7 @@ static CGFloat SLIP_WIDTH = 250;
 }
 -(void)show{
     [self show:YES];
-
+    
 }
 
 -(void)hide {
@@ -248,3 +252,4 @@ static CGFloat SLIP_WIDTH = 250;
 }
 
 @end
+
